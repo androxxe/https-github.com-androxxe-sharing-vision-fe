@@ -1,43 +1,43 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
 type useGetResponse = {
-  data: any;
-  loading: boolean;
-  error: Error | unknown;
-  refetch: () => void;
-};
+  data: any
+  loading: boolean
+  error: Error | unknown
+  refetch: () => void
+}
 
 export default function useGET<T>(
   endpoint: any,
   dependencies: any = [],
   autoStart = true
 ): useGetResponse {
-  const [data, setData] = useState<T | undefined>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null | unknown>(null);
+  const [data, setData] = useState<T | undefined>()
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<Error | null | unknown>(null)
 
   const fetchData = async () => {
-    setLoading(true);
+    setLoading(true)
     try {
-      const res = await endpoint();
-      setData(res as T);
-      setLoading(false);
-      setError(null);
+      const res = await endpoint()
+      setData(res as T)
+      setLoading(false)
+      setError(null)
     } catch (err) {
-      setError(err);
-      setLoading(false);
+      setError(err)
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
     if (autoStart) {
-      fetchData();
+      fetchData()
     }
-  }, dependencies);
+  }, dependencies)
 
   const refetch = () => {
-    fetchData();
-  };
+    fetchData()
+  }
 
-  return { data, loading, error, refetch };
+  return { data, loading, error, refetch }
 }

@@ -27,6 +27,8 @@ export function ReactTable<TValue>({
     []
   );
 
+  const [globalFilter, setGlobalFilter] = React.useState('')
+
   const table = useReactTable({
     data,
     columns,
@@ -37,14 +39,57 @@ export function ReactTable<TValue>({
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     state: {
+      globalFilter,
       sorting,
       columnFilters,
     },
+    onGlobalFilterChange: setGlobalFilter,
   });
+
+  function DebouncedInput({
+    value: initialValue,
+    onChange,
+    debounce = 500,
+    ...props
+  }: {
+    value: string | number;
+    onChange: (value: string | number) => void;
+    debounce?: number;
+  } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange">) {
+    const [value, setValue] = React.useState(initialValue);
+
+    React.useEffect(() => {
+      setValue(initialValue);
+    }, [initialValue]);
+
+    React.useEffect(() => {
+      const timeout = setTimeout(() => {
+        onChange(value);
+      }, debounce);
+
+      return () => clearTimeout(timeout);
+    }, [value]);
+
+    return (
+      <input
+        {...props}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
+  }
 
   return (
     <div>
       <div className="rounded-md border bg-white">
+        <div>
+          <DebouncedInput
+            value={globalFilter ?? ""}
+            onChange={(value) => setGlobalFilter(String(value))}
+            className="input input-md m-5 input-bordered input-round-sm max-w-[240px]"
+            placeholder="Search all columns..."
+          />
+        </div>
         <table className="table table-md">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (

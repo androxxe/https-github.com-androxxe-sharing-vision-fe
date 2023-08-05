@@ -1,4 +1,8 @@
-import { PostCreatePayload, PostGetPayload } from "../types/ApiPayload";
+import {
+  PostCreatePayload,
+  PostGetPayload,
+  PostUpdatePayload,
+} from "../types/ApiPayload";
 import API from "./API";
 import qs from "qs";
 
@@ -7,14 +11,21 @@ export const endpoints = {
     payload: PostCreatePayload
   ): Promise<GetPostsResponse> => API.post("/article", payload),
 
-  getPostAPI: async (payload: PostGetPayload): Promise<any> => {
+  patchPostAPI: async (
+    post_id: number,
+    payload: PostUpdatePayload
+  ): Promise<GetPostsResponse> => API.patch(`/article/${post_id}`, payload),
+
+  getPostAPI: async (
+    payload: PostGetPayload
+  ): Promise<GetListPostsResponse> => {
     const queryString = qs.stringify(payload);
-    return API.get(`/article/1000/10?status=${queryString}`);
+    return API.get(`/article/1000/10?${queryString}`);
   },
 
-  getPostDetailAPI: async (post_id: number): Promise<any> =>
+  getPostDetailAPI: async (post_id: number): Promise<GetPostsResponse> =>
     API.get(`/article/${post_id}`),
 
-  deletePostAPI: async (post_id: number): Promise<any> =>
+  deletePostAPI: async (post_id: number): Promise<ApiResponse<null>> =>
     API.remove(`/article/${post_id}`, {}),
 };

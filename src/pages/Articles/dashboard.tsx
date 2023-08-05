@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import colors from "tailwindcss/colors";
 import { errorParse } from "../../helpers/errorParse";
 import { ReactTable } from "../../components/Table";
+import { FaEye } from "react-icons/fa";
 
 export const Articles = () => {
   const [searchParams] = useSearchParams();
@@ -38,11 +39,14 @@ export const Articles = () => {
       },
       {
         id: "actions",
-        cell: ({ row }) => {
+        cell: ({ row }: any) => {
           return (
-            <div className="space-x-2">
+            <div className="space-x-2 join">
               <Link to={`/articles/${row.original.id}/edit`}>
                 <button className="btn btn-xs">Edit</button>
+              </Link>
+              <Link to={`/articles/${row.original.id}`}>
+                <button className="btn btn-xs bg-green-400">Detail</button>
               </Link>
               <button
                 onClick={() => handleDelete(row.original.id)}
@@ -117,7 +121,6 @@ export const Articles = () => {
               </div>
             ) : (
               <div>
-                {JSON.stringify(() => columns({ handleDelete }))}
                 <ReactTable columns={columns} data={data.data} />
               </div>
             )}
@@ -143,10 +146,10 @@ const Menu = ({
             selectedStatus === "Publish"
               ? "font-bold text-blue-600 bg-gray-100"
               : "font-semibold hover:text-gray-700 hover:bg-gray-50",
-            `inline-block px-4 py-3 rounded-t-lg`
+            `px-4 py-3 rounded-t-lg  flex flex-row items-center gap-x-2`
           )}
         >
-          Publish
+          Publish / Preview <FaEye />
         </Link>
       </li>
       <li>

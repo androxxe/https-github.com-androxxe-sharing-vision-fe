@@ -7,18 +7,26 @@ import { PostStatus } from "../../enums/PostStatus";
 import { toast } from "react-toastify";
 import { endpoints } from "../../services/endpoints";
 import { errorParse } from "../../helpers/errorParse";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useGET from "../../hooks/useGET";
 import { useEffect } from "react";
 
 export const ArticleEdit = () => {
   const navigate = useNavigate();
 
-  const { data } = useGET(() => endpoints.getPostDetailAPI(5));
+  const { id } = useParams();
+  const { data, error } = useGET(() => endpoints.getPostDetailAPI(Number(id)));
+
+  useEffect(() => {
+    if (error) {
+      const { description } = errorParse(error);
+      toast.error(description);
+    }
+  }, [error]);
 
   const onSubmit = async (values: PostCreatePayload): Promise<void> => {
     try {
-      const { message } = await endpoints.createPostAPI(values);
+      const { message } = await endpoints.patchPostAPI(Number(id), values);
       toast.success(message);
 
       navigate("/articles");
@@ -48,9 +56,6 @@ export const ArticleEdit = () => {
     }
   }, [data]);
 
-  const watch = form.watch();
-
-  console.log(watch);
   return (
     <Layout withCreateArticle={false}>
       <div className="p-5">

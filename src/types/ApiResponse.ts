@@ -16,3 +16,5 @@ interface ApiResponse<T> {
 }
 
 interface GetPostsResponse extends ApiResponse<Post> {}
+
+interface GetListPostsResponse extends ApiResponse<Post[]> {}
