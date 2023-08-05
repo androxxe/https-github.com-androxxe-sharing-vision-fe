@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: theme('colors.slate.200');
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
