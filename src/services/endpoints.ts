@@ -3,6 +3,7 @@ import {
   PostGetPayload,
   PostUpdatePayload,
 } from "../types/ApiPayload";
+import { ApiResponse, GetListPostsResponse, GetPostsResponse } from "../types/ApiResponse";
 import API from "./API";
 import qs from "qs";
 

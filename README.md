@@ -12,3 +12,5 @@ Coming soon
 
 ## Note
 This project use `yarn` and not tested on `npm`
+
+Sorry for using "any" on TS, due to lack of time

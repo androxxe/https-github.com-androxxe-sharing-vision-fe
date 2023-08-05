@@ -27,7 +27,7 @@ export const Articles = () => {
       {
         accessorKey: "content",
         header: "Content",
-        cell: ({ row }) => {
+        cell: ({ row }: any) => {
           return row.original.content.length > 50
             ? `${row.original.content.substring(0, 50)}...`
             : row.original.content;

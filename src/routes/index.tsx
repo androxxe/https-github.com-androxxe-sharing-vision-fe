@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter, redirect } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import {
   ArticleCreate,
   ArticleEdit,

@@ -1,15 +1,12 @@
 import { Layout } from "../layout";
-import { PostCreatePayload } from "../../types/ApiPayload";
 import { toast } from "react-toastify";
 import { endpoints } from "../../services/endpoints";
 import { errorParse } from "../../helpers/errorParse";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useGET from "../../hooks/useGET";
 import { useEffect } from "react";
 
 export const ArticleDetail = () => {
-  const navigate = useNavigate();
-
   const { id } = useParams();
   const { data, loading, error } = useGET(() =>
     endpoints.getPostDetailAPI(Number(id))
@@ -32,21 +29,29 @@ export const ArticleDetail = () => {
         <div className="p-5 space-y-4">
           <div className="space-y-1">
             <span className="text-gray-500">Title</span>
-            <span className="block font-bold text-gray-700">{data.data.title}</span>
+            <span className="block font-bold text-gray-700">
+              {data.data.title}
+            </span>
           </div>
 
           <div className="space-y-1">
             <span className="text-gray-500">Content</span>
-            <span className="block font-bold text-gray-700">{data.data.content}</span>
+            <span className="block font-bold text-gray-700">
+              {data.data.content}
+            </span>
           </div>
 
           <div className="space-y-1">
             <span className="text-gray-500">Category</span>
-            <span className="block font-bold text-gray-700">{data.data.category}</span>
+            <span className="block font-bold text-gray-700">
+              {data.data.category}
+            </span>
           </div>
           <div className="space-y-1">
             <span className="text-gray-500">Status</span>
-            <span className="block font-bold text-gray-700">{data.data.status}</span>
+            <span className="block font-bold text-gray-700">
+              {data.data.status}
+            </span>
           </div>
         </div>
       )}

@@ -7,13 +7,13 @@ export const errorParse = (
   errorsData: any
 ): { title: string; description: string } => {
   try {
-    let errorCode = errorList.find(
+    const errorCode = errorList.find(
       (error: any) => error.key === errorsData.message
     );
-    let title = errorCode ? errorCode.title : errorsData.message;
+    const title = errorCode ? errorCode.title : errorsData.message;
 
     console.log("errors", JSON.stringify(errorsData));
-    let response = {
+    const response = {
       title,
       // description: 'asd'
       description: Object.values(errorsData.errors).flat().join(", "),
